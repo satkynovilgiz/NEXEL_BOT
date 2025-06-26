@@ -1,4 +1,3 @@
-import json
 import logging
 from datetime import time, datetime, timedelta
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
@@ -13,23 +12,7 @@ from google.oauth2.service_account import Credentials
 BOT_TOKEN = "7589448484:AAGPmfUoP5rdkMoDWauxTn8LMP2yDTiEmaA"
 ADMIN_CHAT_ID = 7723022511
 GOOGLE_SHEET_NAME = "NEXEL_Bot_Data"
-TIMEZONE_HOUR = 9
-
-# --- ВАЖНО ---
-# Вставь сюда JSON ключ сервисного аккаунта Google
-GOOGLE_CREDENTIALS_JSON = {
-  "type": "service_account",
-  "project_id": "mineral-battery-444808-b6",
-  "private_key_id": "8a0223fa864f0aaf59663620d23cb8954dcd9d5c",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCbcYBV64iQIUCG\nEI66P12KB1ROEh+DSkSBXevvtNwMxMXT7TSOVnd2mB2rbunUw0kQkjVVlBj7PnLz\nrdzHuJvs00Fk1a0byuVrwQ/zNap5TeoyRHvLEneSa9Aufyk6S4iIP+i2vpjuCYLO\nzLwIWAny9l5DMoLGSQGuZBNAbbd8v1UPdw5AFVitbAAx4W8zqSB1LP6zxtNDn1M+\nsiux4Sh+M+ssFwQg7F4pVHn3q9dCZgF3as880uImkGO+oQSXbNAM+4e1Z2Qkymbi\ndSM8uqUc1KYaHmExNUP0ALO8KV6aUlQblpt1Vi62MPM6HP0GOwGMJMp69DDRsDXR\n1shbV7xrAgMBAAECggEAIzpPV+mHqwZmLZvuBMach84ObJ0N2D7KFLl44XvPDPPB\nU7yj1whAjbd+rd32j1nsop1ICguEt9fYzGHgMcEkUUE1RklosG5EnS2FVFyatGAU\njezYU1btk1jstsTpzoTUvfAh6Nx8IyIzq3NZv9hX9OChzz/QxGhCQcf7VvQmi9Yk\nYLZVRxGTPLSgk0uoOu/N/g7aI+0hk1W+lLNeEGJd/pT5ZsjHXxRJ+Gs64/d8FXHa\nnAuaMOPUo3qPvvUgsxFNju+8Xbiy2jLx0NuRPKoabVTjgVHWwcQw31pXIdW4HLDp\nT73x29g8VeRy8i0uXnYtMDlBwLjImtoOKCHcpO90JQKBgQDI6r3Q96Y/86JtlZHX\neFzFBdAcdYKP6MKnOaKQSmOo0HR+W+fZbZHPw/Z10OTl9XjxgH83hA/Yw8fv0X/B\ni1bS7nFjnN+w358lpt7BExMhg2wgM22lvJeorwFIX6PV0yJVLXaJSJbT4Aftsi8J\ndWY5QoTzl0rTAOcErSjvwAwCDQKBgQDGDzfFKnZ8Uey2XkqM+YL2aFvoEHLB8ksY\nyhsHsdbuPauRvLrqNJIHqn1JMAAoOYceQUpnmTglsOBoP5troo63nEFLuPRY3BVo\nYSWj3x6N0kg74q+GPuZrE5P4LYM3iXkYJN8bLy9M8Sfg0NhI6HnrXWmUlQnJ26rz\nc6wMfa6yVwKBgQCZ45qx9Q2kjCLMFrTXOfysd/BX6/Wt7lUxqqaGKEQ/KDMiGZjy\n48a8QVeEFBVOwX76Uzadugw9Nm/skyVshCJje3jkGGMJYa7PMwoJDmgn0ja+T0Xb\nnSD4ddrgqUie3ZG9dg4FxtCnxj+sYz892msKzpVw0l/gUB+iaFMjl5Ba/QKBgHUT\ngdAW7btHYjnbOw5iX7vwrINdVbi31RRuQ9Qkl/x0j/qyKXtQYBIQAcdFjJI6j1if\nF7Btrfb5u21kTCcwDFUVFLQCPM5aKn1tD6byuUj0SKa9tSwR+nrJM+q8XJhztxVC\nlm+nULqWww/t5CwU4Bz1NvgRsZuVMlR+x/EKSj45AoGAA4YaFT8Pv4HJLPCyVVgv\nK56HJNty0b4VMvXtv6nChrnWEznM9a5uzJDLHJhoZ3X555CWNgZn6Aczy1E6NKpm\nF1wcKbu658KZdu4N+1QXLV+UYiJcMDe7SBSBaGszI0mwA1nk1GNJJvewyBZUPZnP\np3Bit159NI+fsUoDyY09/GA=\n-----END PRIVATE KEY-----\n",
-  "client_email": "nexel-kg@mineral-battery-444808-b6.iam.gserviceaccount.com",
-  "client_id": "102365341063193228039",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/nexel-kg%40mineral-battery-444808-b6.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
+TIMEZONE_HOUR = 9  # Часовой пояс для запуска задач
 
 # --- ЛОГИ ---
 logging.basicConfig(
@@ -41,7 +24,8 @@ logger = logging.getLogger(__name__)
 # --- Google Sheets авторизация ---
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
 
-creds = Credentials.from_service_account_info(GOOGLE_CREDENTIALS_JSON, scopes=SCOPES)
+# Загружаем credentials из файла (credentials.json должен быть рядом с main.py)
+creds = Credentials.from_service_account_file('credentials.json', scopes=SCOPES)
 gc = gspread.authorize(creds)
 sheet = gc.open(GOOGLE_SHEET_NAME)
 
@@ -206,8 +190,10 @@ def main():
     app.add_handler(contact_conv)
     app.add_handler(add_faq_conv)
 
+    # Запуск ежедневного напоминания в TIMEZONE_HOUR:00
     app.job_queue.run_daily(send_reminder, time=time(hour=TIMEZONE_HOUR))
 
+    # Запуск еженедельной рассылки фидбека в следующий понедельник 10:00
     start_time = get_next_weekday_time(10, 0, 0)
     app.job_queue.run_repeating(send_feedback_form, interval=7*24*60*60, first=start_time)
 
