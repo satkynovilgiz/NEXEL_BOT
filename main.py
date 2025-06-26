@@ -9,6 +9,13 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 # --- НАСТРОЙКИ ---
+
+
+
+
+
+
+
 BOT_TOKEN = "7589448484:AAGPmfUoP5rdkMoDWauxTn8LMP2yDTiEmaA"
 ADMIN_CHAT_ID = 7723022511  # ID менеджера или группы
 GOOGLE_SHEET_NAME = "NEXEL_Bot_Data"
@@ -197,3 +204,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    # created by Ilgiz Satkynov
