@@ -23,7 +23,6 @@ logger = logging.getLogger(__name__)
 
 # --- Google Sheets авторизация ---
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
-# //created from google cloud
 
 # Загружаем credentials из файла (credentials.json должен быть рядом с main.py)
 creds = Credentials.from_service_account_file('credentials.json', scopes=SCOPES)
