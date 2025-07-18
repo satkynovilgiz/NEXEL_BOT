@@ -10,7 +10,7 @@ from google.oauth2.service_account import Credentials
 
 # --- НАСТРОЙКИ ---
 BOT_TOKEN = "7589448484:AAGPmfUoP5rdkMoDWauxTn8LMP2yDTiEmaA"
-ADMIN_CHAT_ID = 7723022511
+ADMIN_CHAT_ID = [7723022511, 5005318439]
 GOOGLE_SHEET_NAME = "NEXEL_Bot_Data"
 TIMEZONE_HOUR = 9  # Часовой пояс для запуска задач
 
@@ -40,7 +40,6 @@ main_menu = ReplyKeyboardMarkup(
     [["📌 Частые вопросы", "📝 Оставить фидбек"], ["📩 Написать команде"]],
     resize_keyboard=True
 )
-
 # --- Хелперы ---
 
 def get_faq_text():
@@ -113,8 +112,7 @@ feedback_conv = ConversationHandler(
     },
     fallbacks=[]
 )
-
-# --- Связь с командой ---
+# for student
 
 async def contact_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("✍️ Напишите сообщение команде:", reply_markup=ReplyKeyboardRemove())
